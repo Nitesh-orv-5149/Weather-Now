@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather_now</title>
+    <script defer src="/static/script.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="/static/partly_cloudy_day.png".png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&family=Rubik+Dirt&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Noto+Serif+KR:wght@200..900&family=Rubik+Dirt&display=swap" rel="stylesheet">
+    <style>
+         /* Apply Custom Font */
+        body{
+            color: aliceblue;
+        }
+        
+        .font-wood {
+            font-family: "Rubik Dirt", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .lilita-one-regular {
+            font-family: "Lilita One", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+
+        /* Fullscreen Animated Background */
+        .bg-container {
+            background-color: #072E33;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;  /* Adjust width as needed */
+            height: 100vh;
+            background:#1E293B;  /* Ensure contrast */
+            border-top-right-radius: 20px;  /* Round top-right corner */
+            border-bottom-right-radius: 20px; /* Round bottom-right corner */
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%); /* Hide initially */
+            z-index: 1000; /* Higher than content */
+            box-shadow: 5px 0px 10px rgba(170, 242, 255, 0.425);
+        }
+
+        .sidebar ul {
+            padding-left: 15px; 
+            padding-top: 10px;
+        }
+
+
+        .sidebar.active {
+            transform: translateX(0); /* Show when active */
+        }
+
+        .menu-icon {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            cursor: pointer;
+            z-index: 1100; /* Ensure it's above everything */
+            transition: left 0.3s ease-in-out;
+        }
+
+        .sidebar.active + .menu-icon {
+            left: 100px; /* Moves inside the sidebar */
+        }
+
+    </style>
+</head class="flex items-center justify-center h-screen text-white relative">
+<body class="bg-[#021024] lilita-one-regular">
+    <!-- Animated Background -->
+    <div class="bg-container"></div>
+
+    <div class="grid grid-cols-3 text-white text-center pt-[3rem]">
+        <div id="menu" class="rounded-5xl">
+            <!-- Menu Trigger and Sidebar -->
+            <h2 class="text-2xl font-wood mb-6 mt-3.5 pr-[7rem]">MENU</h2> 
+            <div class="menu-icon">
+                <span class="material-symbols-outlined text-5xl pl-[5rem] pt-[2.5rem]">menu</span>
+            </div>
+            <div class="sidebar p-6 pt-[10rem] rounded-4xl border border-[#00B7FF]">
+                <h2 class="text-2xl font-wood mb-6 mt-4">MENU</h2>
+                <nav class="space-y-4 ">
+                    <a href="#" class="block py-2 px-4 hover:bg-[#021024] rounded-3xl transition-colors border border-[#00B7FF]">Home</a>
+                    <a href="#" class="block py-2 px-4 hover:bg-[#021024] rounded-3xl transition-colors border border-[#00B7FF]">Settings</a>
+                    <a href="#" class="block py-2 px-4 hover:bg-[#021024] rounded-3xl transition-colors border border-[#00B7FF]">About</a>
+                    <a href="#" class="block py-2 px-4 hover:bg-[#021024] rounded-3xl transition-colors border border-[#00B7FF]">Contact</a>
+                </nav>
+            </div>
+
+        </div>
+        <h1 class="text-4xl font-wood pb-[2rem]">
+            <span class="material-symbols-outlined text-5xl pr-[1rem]">
+                 partly_cloudy_day
+            </span>WEATHER NOW</h1>
+        <div class="pl-[4rem]">
+            <select name="city" value="select" class="w-[15rem] h-[3rem] rounded-3xl text-white 
+            bg-[#1E293B] border border-[#334155] shadow-lg
+            transition-all duration-300 ease-in-out
+            focus:ring-2 focus:ring-[#3B82F6] focus:border-[#3B82F6]
+            hover:bg-[#021024]  px-4">
+                <option value="" selected class="text-center">Choose a City</option>
+                <option value="delhi" class="text-center">Delhi</option>
+                <option value="mumbai" class="text-center">Mumbai</option>
+                <option value="bangalore" class="text-center">Bangalore</option>
+                <option value="chennai" class="text-center">Chennai</option>
+                <option value="kolkata" class="text-center">Tiruchirappalli</option>
+                <option value="london" class="text-center">London</option>
+            </select>
+        </div>
+    </div>
+    
+    <div id="whole" class="text-white text-center grid grid-cols-10 grid-rows-6 gap-4 p-4 m-4 h-[75vh] rounded-3xl">
+
+        <div id="item1" class=" p-6 text-center col-span-4 row-span-2 bg-[#0e1627] border border-[#00B7FF] rounded-lg shadow-sm">
+            <div class="grid grid-cols-2 grid-rows-1 ">
+                <h3 class="pl-[2rem] text-2xl text-[#87DCFF]">Temperature:</h3><div id="city-name" class="opacity-[0]">--</div>
+            
+                <!-- Temperature Section -->
+                <div class="flex items-center gap-4 pl-[3rem]">
+                    <span class="material-symbols-outlined text-6xl">
+                        device_thermostat
+                    </span>
+                    <div class="text-4xl">
+                        <span id="temperature">--</span>°C
+                    </div>
+                </div>
+            
+                <!-- Condition Section (Now Horizontal) -->
+                <div class="col-start-2 flex flex-col items-start gap-1 pl-[4rem] -mt-6">
+                    <p class="text-xl text-[#87DCFF]">Condition:</p>
+                    <span id="condition" class="text-3xl pl-[0.5rem] ">--</span>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <div class=" p-6 text-center col-span-6 row-span-4 bg-[#0e1627] border border-[#00B7FF] rounded-lg shadow-sm">
+            <div>
+                <h2 class="text-4xl mb-3 text-[#87DCFF]">3-HOUR FORCAST</h2>
+                <div id="forecast" class="text-2xl p-6 m-4"></div>
+            </div>
+        </div>
+        
+        <div class="p-6 text-center col-span-4 row-span-2 bg-[#0e1627] 
+            border border-[#00B7FF] rounded-lg shadow-sm">
+            
+            <h2 class="text-xl mb-3 text-[#87DCFF]">AIR QUALITY :</h2>
+
+            <!-- First Row: AQI & PM2.5 --> 
+            <div class="flex justify-center gap-6 text-white text-lg ">
+                <p>Air Quality Index (AQI): <span id="aqi">--</span></p>
+                <p>PM2.5: <span id="pm25">--</span> µg/m³</p>
+            </div>
+
+            <!-- Second Row: CO & NO₂ -->
+            <div class="flex justify-center gap-6 text-white text-lg mt-2">
+                <p>CO: <span id="co">--</span> µg/m³</p>
+                <p>NO₂: <span id="no2">--</span> µg/m³</p>
+            </div>
+        </div>
+
+       
+        <div class="p-6 text-center col-span-2 row-span-2 bg-[#0e1627] border border-[#00B7FF] rounded-lg shadow-sm">
+            <p class="text-[#87DCFF]">Sunrise: </p><span id="sunrise">--</span>
+            <p class="text-[#87DCFF]">Sunset: </p><span id="sunset">--</span>
+        </div>
+        
+        <div class=" p-6 text-center col-span-2 row-span-2 bg-[#0e1627] border border-[#00B7FF] rounded-lg shadow-sm">
+            <p class="text-[#87DCFF]">Pressure: </p><span id="pressure">--</span> hPa
+            <p class="text-[#87DCFF]">Humidity: </p><span id="humidity">--</span>%
+        </div>
+       
+        <div class="p-6 text-center col-span-2 row-span-2 bg-[#0e1627] border border-[#00B7FF] rounded-lg shadow-sm">
+            <p class="text-[#87DCFF]">Cloudiness: </p><span id="clouds">--</span>%
+            <p class="text-[#87DCFF]">Rain (Last 1hr): </p><span id="rain">--</span>
+        </div>
+      
+        <div class="p-6 text-center col-span-2 row-span-2 bg-[#0e1627] border border-[#00B7FF] rounded-lg shadow-sm">
+            <p class="text-[#87DCFF]">Wind Speed: </p><span id="wind-speed">--</span> m/s
+            <p class="text-[#87DCFF]">Wind Direction:</span>°</p> <span id="wind-direction">--            
+        </div>
+      
+        <div class="p-6 pt-[3rem] text-center col-start-9 col-end-11 row-start-5 row-end-7 bg-[#0e1627] border border-[#00B7FF] rounded-lg shadow-sm">
+            <h2 class="text-[#87DCFF]">Weather Alerts</h2>
+            <ul id="alerts"></ul>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
