@@ -2,25 +2,25 @@ let ws;
 
 let currentCity = ""; // Remove default city
 
-const menuIcon = document.querySelector(".menu-icon");
-const sidebar = document.querySelector(".sidebar");
+#sidebar toggle
+document.addEventListener("DOMContentLoaded", function () {
+    const menuIcon = document.querySelector(".menu-icon");
+    const sidebar = document.querySelector(".sidebar");
 
-// Menu toggle functionality
-document.querySelector('.menu-icon').addEventListener('click', () => {
-    document.querySelector('.sidebar').classList.toggle('active');
-});
+    // Ensure elements exist before adding event listeners
+    if (menuIcon && sidebar) {
+        menuIcon.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
 
-menuIcon.addEventListener("click", function () {
-    sidebar.classList.toggle("active");
-    
-    // Move icon inside sidebar when opened
-    if (sidebar.classList.contains("active")) {
-        menuIcon.style.left = "110px"; // Adjust based on sidebar width
-    } else {
-        menuIcon.style.left = "15px"; // Default position
+            // Adjust menu icon position when sidebar is active
+            if (sidebar.classList.contains("active")) {
+                menuIcon.style.left = "110px"; // Adjust based on sidebar width
+            } else {
+                menuIcon.style.left = "15px"; // Default position
+            }
+        });
     }
 });
-
 
 // Function to clear all weather data displays
 function clearWeatherData() {
