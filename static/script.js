@@ -2,7 +2,7 @@ let ws;
 
 let currentCity = ""; // Remove default city
 
-#sidebar toggle
+//sidebar toggle
 document.addEventListener("DOMContentLoaded", function () {
     const menuIcon = document.querySelector(".menu-icon");
     const sidebar = document.querySelector(".sidebar");
